@@ -53,14 +53,24 @@ Shader "Custom/NormalAlbedoColorTintFogged"
 			half fog;
 		};
 
-		void Ver(inout appdata_full)
+		void Vert(inout appdata_full v, out Input data)
 		{
-		
+			UNITY_INITIALIZE_OUTPUT(Input, data);
+			float4 hpos = UnityObjectToClipPos(v.vertex);
+
+			hpos.xy /= hpos.w;
+			data.fog = min(1, dot(hpos.xy, hpos.xy) * 0.5);
 		}
 
-		void FogColor()
+		void FogColor(Input IN, SurfaceOutput o, inout fixed4 color)
 		{
-		
+			fixed3 fogColor = _FogColor.rgb;
+
+			#ifdef UNITY_PASS_FORWARDADD
+			fogColor = 0;
+			#endif
+
+			color.rgb = lerp(color.rgb, fogColor, IN.fog);
 		}
 
 		// The funcion name must match what was defined in the pragma

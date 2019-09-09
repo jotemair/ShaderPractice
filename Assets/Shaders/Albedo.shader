@@ -21,6 +21,7 @@ Shader "Custom/Albedo"
 
 		// This is the part for our CG code (C for Graphics)
 		// Other parts are written HLSL (High Level Shader Language)
+		// http://developer.download.nvidia.com/cg/Cg_language.html
 		CGPROGRAM
 		
 		// The surface is affected by our function, the material type is Lambert which affects what it can do

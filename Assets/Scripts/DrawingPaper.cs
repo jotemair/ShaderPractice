@@ -92,13 +92,13 @@ public class DrawingPaper : MonoBehaviour
 
             material.SetFloat("_PencilSize", pencilSize);
             material.SetFloat("_PencilCorrection", pencilCorrection);
-            material.SetFloat("_Value3", intensity);
-            material.SetFloat("_Value4", animationSpeed);
-            material.SetFloat("_Value5", cornerLoss);
-            material.SetFloat("_Value6", paperFadeIn);
-            material.SetFloat("_Value7", paperFadeColor);
+            material.SetFloat("_Intesity", intensity);
+            material.SetFloat("_AnimationSpeed", animationSpeed);
+            material.SetFloat("_CornerLoss", cornerLoss);
+            material.SetFloat("_PaperFadeIn", paperFadeIn);
+            material.SetFloat("_PaperFadeColor", paperFadeColor);
 
-            material.SetTexture("_MainTex2", paper);
+            material.SetTexture("_PaperTexture", paper);
 
             Graphics.Blit(source, destination, material);
         }

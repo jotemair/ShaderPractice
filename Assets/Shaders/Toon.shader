@@ -5,7 +5,7 @@
 			_Texture("Texture", 2D) = "black" {}
 
 			_OutlineColor("Outline Color", Color) = (1,1,1,1)
-			_OutlineWidth("Outline Width", Range(1.0,10.0)) = 1.1
+			_OutlineWidth("Outline Width", Range(0.0, 1.0)) = 0.1
 
 			_AmbientLightIntensity("Ambient Light Intensity", Range(-1.0, 2.0)) = 0.0
 			_DarknessTreshold("Darkness Treshold", Range(0.0, 1.0)) = 0.1
@@ -52,7 +52,7 @@
 				v2f vert(appdata IN)
 				{
 					// Scale up the local vertex positions by the outline width value to make the object appear bigger
-					IN.vertex.xyz *= _OutlineWidth;
+					IN.vertex.xyz *= (_OutlineWidth + 1.0);
 					v2f OUT;
 
 					OUT.pos = UnityObjectToClipPos(IN.vertex);

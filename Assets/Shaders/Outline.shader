@@ -45,9 +45,9 @@
 			{
 				// Get the scaling of the object
 				float3 objScale = float3(1, 1, 1);
-				objScale.x = length(mul(unity_ObjectToWorld, float3(1, 0, 0)) - mul(unity_ObjectToWorld, float3(0, 0, 0)));
-				objScale.y = length(mul(unity_ObjectToWorld, float3(0, 1, 0)) - mul(unity_ObjectToWorld, float3(0, 0, 0)));
-				objScale.z = length(mul(unity_ObjectToWorld, float3(0, 0, 1)) - mul(unity_ObjectToWorld, float3(0, 0, 0)));
+				objScale.x = length(mul(unity_ObjectToWorld, float4(1, 0, 0, 1)) - mul(unity_ObjectToWorld, float4(0, 0, 0, 1)));
+				objScale.y = length(mul(unity_ObjectToWorld, float4(0, 1, 0, 1)) - mul(unity_ObjectToWorld, float4(0, 0, 0, 1)));
+				objScale.z = length(mul(unity_ObjectToWorld, float4(0, 0, 1, 1)) - mul(unity_ObjectToWorld, float4(0, 0, 0, 1)));
 
 				// Inversly scale the outline width with the object scale, and add it to one
 				// This way, the outline will be a fixed width regardless of object scale

@@ -8999,7 +8999,7 @@ ParticleSystem:
     subEmitters:
     - serializedVersion: 3
       emitter: {fileID: 1182738742}
-      type: 2
+      type: 1
       properties: 0
       emitProbability: 1
     - serializedVersion: 3

@@ -4,6 +4,7 @@
 	{
 		_MainTex("Texture", 2D) = "white" {}
 		_Scale("Scale", Range(0.1, 10)) = 1
+		_Gradient("Gradient", Range(0.1, 10)) = 1
 		_TintColor("TintColor", Color) = (1,1,1,1)
 
 		_ScrollSpeedX("Scroll X Speed", Range(-10, 10)) = 2
@@ -63,6 +64,7 @@
 			fixed4 _MainTex_TexelSize;
 
 			fixed _Scale;
+			fixed _Gradient;
 
 			fixed4 _TintColor;
 
@@ -142,21 +144,13 @@
 				//   This effectively controls how close the point on the object needs to be to the background to be considered intersecting
 				fixed intersect = saturate((depthDiff) / _IntersectionThreshold);
 
-				// Get triplanar texture
-				fixed3 projNormal = saturate(pow(IN.worldNormal * 1.4, 4));
-
-				// SIDE X
-				fixed3 x = tex2D(_MainTex, frac(IN.worldPos.zy * _Scale)) * abs(IN.worldNormal.x);
-
-				// TOP / BOTTOM
-				fixed3 y = tex2D(_MainTex, frac(IN.worldPos.zx * _Scale)) * abs(IN.worldNormal.y);
-
-				// SIDE Z	
-				fixed3 z = tex2D(_MainTex, frac(IN.worldPos.xy * _Scale)) * abs(IN.worldNormal.z);
-
-				fixed3 mainTextureColor = z;
-				mainTextureColor = lerp(mainTextureColor, x, projNormal.x);
-				mainTextureColor = lerp(mainTextureColor, y, projNormal.y);
+				// Get triplanar texture (no overlap correction)
+				fixed3 projNormal = normalize(pow(abs(IN.worldNormal), _Gradient)) + float3(0.0001, 0.0001, 0.0001);
+				fixed3 localPos = IN.worldPos - mul(unity_ObjectToWorld, float4(0, 0, 0, 1));
+				fixed3 x = tex2D(_MainTex, frac(localPos.zy * _Scale)) * projNormal.x;
+				fixed3 y = tex2D(_MainTex, frac(localPos.zx * _Scale)) * projNormal.y;
+				fixed3 z = tex2D(_MainTex, frac(localPos.xy * _Scale)) * projNormal.z;
+				fixed3 mainTextureColor = x + y + z;
 
 				// Distortion
 
